@@ -110,7 +110,7 @@ export default function Header() {
                     className="bg-web-color hover:bg-web-color/90 mt-4"
                     asChild
                   >
-                    <a href="tel:+2349126790153">Get Quote</a>
+                    <a href="tel:+2348166533091">Contact Us</a>
                   </Button>
                 </nav>
               </SheetContent>
