@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import Image from "next/image";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("");
   const pathname = usePathname();
 
   const navigation = [
@@ -18,26 +19,38 @@ export default function Header() {
     { name: "Services", href: "#services" },
   ];
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setActiveHash(window.location.hash);
+      const handleHashChange = () => {
+        setActiveHash(window.location.hash);
+      };
+      window.addEventListener("hashchange", handleHashChange);
+      return () => window.removeEventListener("hashchange", handleHashChange);
+    }
+  }, []);
+
   const handleScroll = (e, href) => {
     e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth",
-      });
+    if (typeof window !== "undefined") {
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: "smooth",
+        });
+        window.history.pushState(null, null, href); // Update URL hash
+      }
     }
     setIsOpen(false);
   };
 
   return (
     <header className="w-full fixed top-0 z-50">
-      {/* Main Header */}
       <div className="bg-white shadow-md">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src="/FX-logo.jpeg"
@@ -47,7 +60,6 @@ export default function Header() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navigation.map((item) => (
                 <a
@@ -55,7 +67,7 @@ export default function Header() {
                   href={item.href}
                   onClick={(e) => handleScroll(e, item.href)}
                   className={`text-gray-700 hover:text-web-color font-medium transition-colors cursor-pointer ${
-                    pathname === "/" && window.location.hash === item.href
+                    pathname === "/" && activeHash === item.href
                       ? "text-web-color font-bold underline"
                       : ""
                   }`}
@@ -72,7 +84,6 @@ export default function Header() {
               </Button>
             </nav>
 
-            {/* Mobile Navigation */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild className="md:hidden">
                 <Button variant="outline" size="icon">
@@ -87,7 +98,7 @@ export default function Header() {
                       href={item.href}
                       onClick={(e) => handleScroll(e, item.href)}
                       className={`text-lg font-medium text-gray-700 hover:text-web-color transition-colors cursor-pointer ${
-                        pathname === "/" && window.location.hash === item.href
+                        pathname === "/" && activeHash === item.href
                           ? "text-web-color font-bold underline"
                           : ""
                       }`}

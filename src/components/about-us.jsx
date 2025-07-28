@@ -20,7 +20,6 @@ const About = () => {
           <iframe
             src="https://www.youtube.com/embed/fZRejyscSjI?si=jtZKl1-BijB_7rmD"
             title="YouTube video player"
-            frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             className="w-full h-80"
             referrerPolicy="strict-origin-when-cross-origin"

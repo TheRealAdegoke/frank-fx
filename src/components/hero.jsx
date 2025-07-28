@@ -7,7 +7,6 @@ import { Phone } from "lucide-react";
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Auto-advance carousel every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
@@ -35,19 +34,21 @@ const Hero = () => {
 
   const handleScroll = (e, href) => {
     e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80, // Adjust for header height
-        behavior: "smooth",
-      });
+    if (typeof window !== "undefined") {
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: "smooth",
+        });
+        window.history.pushState(null, null, href);
+      }
     }
   };
 
   return (
     <section className="relative h-screen min-h-[600px] overflow-hidden">
-      {/* Background Image Carousel */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
           <div
@@ -66,15 +67,13 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Gradient Overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/80" />
 
-      {/* Content Overlay */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto lg:pt-20 px-4">
+        <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <Badge className="bg-white/20 text-white mb-4 backdrop-blur-sm">
-              Forex Trading & Web developement
+              Forex Trading & Web development
             </Badge>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white max-w-[37rem]">
               {heroImages[currentImage].title}
@@ -112,7 +111,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Carousel Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
         {heroImages.map((_, index) => (
           <Button

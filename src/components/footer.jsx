@@ -1,19 +1,36 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Phone, MapPin, Clock } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
+  const [activeHash, setActiveHash] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setActiveHash(window.location.hash);
+      const handleHashChange = () => {
+        setActiveHash(window.location.hash);
+      };
+      window.addEventListener("hashchange", handleHashChange);
+      return () => window.removeEventListener("hashchange", handleHashChange);
+    }
+  }, []);
+
   const handleScroll = (e, href) => {
     e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth",
-      });
+    if (typeof window !== "undefined") {
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: "smooth",
+        });
+        window.history.pushState(null, null, href);
+      }
     }
   };
 
@@ -27,7 +44,6 @@ export default function Footer() {
     <footer className="bg-white text-black">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
           <div>
             <Link href="/" className="flex items-center space-x-2">
               <Image
@@ -44,7 +60,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Services */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Our Services</h4>
             <ul className="space-y-2 text-sm opacity-90">
@@ -57,7 +72,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-3 text-sm opacity-90">
@@ -78,7 +92,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm opacity-90">
@@ -87,7 +100,9 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => handleScroll(e, link.href)}
-                    className="hover:text-web-color transition-colors cursor-pointer"
+                    className={`hover:text-web-color transition-colors cursor-pointer ${
+                      activeHash === link.href ? "text-web-color font-bold" : ""
+                    }`}
                   >
                     {link.name}
                   </a>
