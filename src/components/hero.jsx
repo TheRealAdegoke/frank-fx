@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Phone } from "lucide-react";
 
 const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImage, setCurrentImage] = useState(0); 
 
   useEffect(() => {
     const timer = setInterval(() => {
