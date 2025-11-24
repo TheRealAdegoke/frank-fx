@@ -1,4 +1,5 @@
 import About from "@/components/about-us";
+import CommunitySection from "@/components/community-section";
 import Hero from "@/components/hero";
 import ServicesSection from "@/components/service-section";
 
@@ -13,6 +14,9 @@ export default function Home() {
       </section>
       <section id="about">
         <About />
+      </section>
+      <section id="services">
+        <CommunitySection/>
       </section>
     </main>
   );
