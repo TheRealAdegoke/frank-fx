@@ -79,7 +79,7 @@ const About = () => {
         </div>
       </div>
 
-      <div className="w-[90%] max-w-[1320px] mx-auto flex justify-evenly max-lg:flex-col gap-8">
+      {/* <div className="w-[90%] max-w-[1320px] mx-auto flex justify-evenly max-lg:flex-col gap-8">
         <div className="relative max-lg:max-w-[600px] mx-auto">
           <Image
             src="/about-image-1.webp"
@@ -132,7 +132,7 @@ const About = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
