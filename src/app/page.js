@@ -16,7 +16,7 @@ export default function Home() {
         <About />
       </section>
       <section id="services">
-        <CommunitySection/>
+        <CommunitySection/> 
       </section>
     </main>
   );
