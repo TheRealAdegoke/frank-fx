@@ -101,7 +101,7 @@ const Hero = () => {
                 className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-black backdrop-blur-sm"
                 asChild
               >
-                <a href="tel:+2349126790153">
+                <a href="tel:+2348166533091">
                   <Phone className="mr-2 h-4 w-4" />
                   Call Now: +234 (0) 816 653 3091
                 </a>
